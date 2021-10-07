@@ -1,0 +1,13 @@
+---
+
+- name: Check if docker exists
+  command: "docker -v"
+  changed_when: false
+  register: docker_exists
+  ignore_errors: yes
+
+- name: check if nginx service is running or not
+  command: "curl http://localhost:{{ nginx.container_port }}"
+  changed_when: false
+  register: service_running
+  ignore_errors: yes

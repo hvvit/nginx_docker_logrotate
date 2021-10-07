@@ -1,0 +1,9 @@
+---
+
+nginx:
+
+  docker_image: "nginx:stable"
+  
+  container_name: "nginx"
+
+  container_port: "8080"

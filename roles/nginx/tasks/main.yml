@@ -1,0 +1,4 @@
+---
+
+- include_tasks: pre_req.yml
+- include_tasks: nginx.yml

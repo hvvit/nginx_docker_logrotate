@@ -1,0 +1,19 @@
+---
+
+- name: Check if docker exists
+  command: "docker -v"
+  changed_when: false
+  register: docker_exists
+  ignore_errors: yes
+
+- name: Get container details
+  block:
+  - name: get container id
+    command: docker ps --no-trunc -aqf name={{ container_name }}
+    changed_when: false
+    register: output
+
+  - name: get id
+    set_fact:
+      container_id: "{{ output.stdout }}"
+  when: docker_exists

@@ -1,0 +1,29 @@
+---
+
+- name: Check if docker exists
+  command: "docker -v"
+  changed_when: false
+  register: docker_exists
+  ignore_errors: yes
+
+- name: Pre configure machine for docker install
+  block:
+  - name: Run apt update
+    apt:
+      update_cache: yes
+
+  - name: Install basic system packages for host
+    apt:
+      name: "{{ item }}"
+      state: latest
+    loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    - software-properties-common
+    - python3-pip
+    - virtualenv
+    - python3-setuptools
+  when: docker_exists.rc != 0 or docker_upgrade

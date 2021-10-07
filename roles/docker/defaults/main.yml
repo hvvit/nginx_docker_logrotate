@@ -1,0 +1,5 @@
+---
+
+docker_version: "latest"
+docker_upgrade: false
+ubuntu_flavor: "focal"

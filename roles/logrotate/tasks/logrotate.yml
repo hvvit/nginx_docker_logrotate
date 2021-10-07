@@ -1,0 +1,22 @@
+---
+
+- name: Logrotate block
+  block:
+  - name: Install logrotate
+    apt:
+      name: logrotate
+      state: latest
+  - name: create config for nginx logs
+    copy:
+      content: |
+        /var/lib/docker/containers/{{ container_id }}/{{ container_id }}-json.log {
+          rotate 5
+          copytruncate
+          missingok
+          notifempty
+          compress
+          maxsize 100M
+          daily
+        }
+      dest: "/etc/logrotate.d/{{ container_name }}"
+    when: ansible_facts['os_family'] == 'Debian'
